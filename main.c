@@ -27,15 +27,19 @@ void inputErrorHandling(int argc, char *argv[]){
     }
     if(argc > 2 && isInt(argv[2]) == 0) { 
         printf("Bledna ilosc wierszy");
+        exit(-1);
     }
     if(argc > 3 && isInt(argv[3]) == 0) { 
         printf("Bledna ilosc kolumn");
+        exit(-1);
     }
     if(argc > 4 && isDouble(argv[4]) == 0) { 
         printf("Bledny zakres wag krawedzi grafu");
+        exit(-1);
     }
     if(argc > 5 && isDouble(argv[5]) == 0) { 
         printf("Bledny zakres wag krawedzi grafu");
+        exit(-1);
     }
     
 }
