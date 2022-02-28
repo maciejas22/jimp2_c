@@ -6,4 +6,4 @@ flaga = "-r" w przypadku gdy wczytujemny graf z pliku i "-g" w przypadku gdy chc
 
 reszta argumentow opcjonalna
 
-w przypadku wybrania flagi "-g" ale nie ustalenia wielkości grafu i zakresu wagi krawedzi deafultowe ustawienia to: graf 5x5 z krawedziami w zakresi 0 - 1
+w przypadku wybrania flagi "-g" ale nie ustalenia wielkości grafu i zakresu wagi krawedzi deafultowe ustawienia to: graf 5x5 z krawedziami w zakresi <0, 1>
