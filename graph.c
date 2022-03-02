@@ -51,6 +51,35 @@ void readGraphFromFile(char *file_name) {
     fclose(in);
 }
 
+void readGraphFromFile(char *file_name) {
+    FILE *in = fopen(file_name, "r");
+    if(in == NULL) {
+        printf("Nie mozna otworzyc pliku\n");
+        exit(-1);
+    }
+
+    char line[4];
+    fgets(line, 4, in);
+    int rows = line[0] - '0';
+    int columns = line[2] - '0';
+
+    char tmp1, tmp2, tmp3, tmp4;
+    int destination, source = 0;
+    double weight;
+    fgetc(in);
+    
+    while(!feof(in)) {
+        fscanf(in, "%c%c", &tmp1, &tmp2);
+        if(tmp2 == '\n') {
+            source++;
+            continue;
+        }
+        fscanf(in, "%d%c%c%lf", &destination, &tmp3, &tmp4, &weight);
+        printf("%d %d %lf\n", source, destination, weight);
+    }
+    fclose(in);
+}
+
 void writeGraphToFile(struct graph *grid, char *file_name, int rows, int columns) {
     FILE *out = fopen(file_name, "w");
     if(out == NULL) {
