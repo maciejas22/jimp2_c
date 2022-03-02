@@ -52,12 +52,13 @@ int main(int argc, char *argv[]) {
     double min_weight_range = argc > 4 ? atof(argv[4]) : 0;
     double max_weight_range = argc > 5 ? atof(argv[5]) : 1; 
     
-    struct graph *grid = initGraph(4);
-    addEdge(grid, 0, 3 ,1.33213212);
-    addEdge(grid, 1, 3 ,1.32321);
-    addEdge(grid, 2, 3 ,1.32132);
-    addEdge(grid, 2, 3, 1.3);
-    writeGraphToFile(grid, file_name, 7, 3);
-    freeGraph(grid);
+    // struct graph *grid = initGraph(rows*columns);
+    // addEdge(grid, 0, 3 ,1.33213212);
+    // addEdge(grid, 1, 3 ,1.32321);
+    // addEdge(grid, 2, 3 ,1.32132);
+    // addEdge(grid, 2, 3, 1.3);
+    // writeGraphToFile(grid, file_name, 7, 3);
+    // freeGraph(grid);
+    readGraphFromFile(file_name);
     return 0;
 }
