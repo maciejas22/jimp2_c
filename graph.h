@@ -22,7 +22,6 @@ struct graph {
 };
 
 struct graph *initGraph(size_t n);
-struct vertex *initVertex(int destination, double weight);
 void addEdge(struct graph *grid, int soruce, int destination, double weight);
 void writeGraphToFile(struct graph *grid, char *file_name, int rows, int columns);
 void freeGraph(struct graph *grid);
