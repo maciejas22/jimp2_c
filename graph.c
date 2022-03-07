@@ -5,13 +5,9 @@
 
 struct graph *initGraph(int rows, int columns) {
     struct graph *grid = (struct graph*) malloc(sizeof(struct graph));
-<<<<<<< HEAD
     grid->rows = rows;
     grid->columns = columns;
     int n = rows*columns;
-=======
-    grid->vertex_number = n;
->>>>>>> a84cb44409d57baa036693260fe160c79c5e9c40
     grid->adjacency_list = (struct vertex_list*) malloc(n * sizeof(struct vertex_list));
     for(int i = 0; i < n; i++) {
         grid->adjacency_list[i].vertexes = NULL;
