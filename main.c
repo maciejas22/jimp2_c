@@ -3,28 +3,23 @@
 #include <string.h>
 #include <ctype.h>
 #include "graph.h"
+#include "BFS.h"
 
 bool isDouble(char *string) {
-    char *endPointer;
-    strtod(string, &endPointer);
-    return string != endPointer;
-}
-
-bool isInt(char *string) {
-    for(int i = 0; string[i] != '\0'; i++) {
-        if(isdigit(string[i]) == 0)
-            return 0;
+    if(atof(string) <= 0) {
+	    return 0;
     }
-    if(atol(string) > 2147483648 || atol(string) < -2147483648)
-        return 0;
     return 1;
 }
 
-void inputErrorHandling(int argc, char *argv[]){
-    if(argc > 1 && argv[1] != "-r") {
-        fprintf(stderr, "Nieprawidlowa flaga");
-        exit(-1);
+bool isInt(char *string) {
+    if(atoi(string) <= 0) {
+	    return 0;
     }
+    return 1;
+}
+
+void inputErrorCheck(int argc, char *argv[]){
     if(argc > 2 && isInt(argv[2]) == 0) { 
         fprintf(stderr, "Bledna ilosc wierszy");
         exit(-1);
@@ -34,11 +29,11 @@ void inputErrorHandling(int argc, char *argv[]){
         exit(-1);
     }
     if(argc > 4 && isDouble(argv[4]) == 0) { 
-        fprintf(stderr, "Bledny zakres wag krawedzi grafu");
+        fprintf(stderr, "Bledny zakres dolnej wagi krawedzi grafu");
         exit(-1);
     }
     if(argc > 5 && isDouble(argv[5]) == 0) { 
-        fprintf(stderr, "Bledny zakres wag krawedzi grafu");
+        fprintf(stderr, "Bledny zakres gornej wagi krawedzi grafu");
         exit(-1);
     }
     
@@ -51,17 +46,28 @@ int main(int argc, char *argv[]) {
     int columns = argc > 3 ? atoi(argv[3]) : 5;
     double min_weight_range = argc > 4 ? atof(argv[4]) : 0;
     double max_weight_range = argc > 5 ? atof(argv[5]) : 1; 
+    inputErrorCheck(argc, argv);
     
-    struct graph *grid = initGraph(rows, columns);
-    if(strcmp(mode, "-r")) {
-        readGraphFromFile(grid, file_name);
-        writeGraphToFile(grid, "myGraph.txt");
-    }   
-    else if(strcmp(mode, "-g")) {
+    struct graph *grid = NULL;
+    if(!strcmp(mode, "-r")) {
         printf("Jeszcze niezaimplementowane");
+    }   
+    else if(!strcmp(mode, "-g")) {
+        grid = readGraphFromFile(grid, "mojGraf.txt");
+        writeGraphToFile(grid, "wynik.txt");
+        switch(BFS(grid))
+        {
+            case 1:
+                printf("Graf jest spojny\n");
+                break;
+            case 0:
+                printf("Graf nie jest spojny\n");
+                break;
+        }
     }
     else {
-        printf("Nie poprawna flaga");
+        fprintf(stderr, "Nie poprawna flaga");
+        exit(-1);
     }
     freeGraph(grid);
     return 0;

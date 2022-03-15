@@ -25,7 +25,7 @@ void addEdge(struct graph *grid, int soruce, int destination, double weight) {
     grid->adjacency_list[soruce].vertexes = newVertex;
 }
 
-void readGraphFromFile(struct graph *grid, char *file_name) {
+struct graph *readGraphFromFile(struct graph *grid, char *file_name) {
     FILE *in = fopen(file_name, "r");
     if(in == NULL) {
         fprintf(stderr, "Nie mozna otworzyc pliku\n");
@@ -34,8 +34,7 @@ void readGraphFromFile(struct graph *grid, char *file_name) {
 
     char line[4];
     fgets(line, 4, in);
-    grid->rows = line[0] - '0';
-    grid->columns = line[2] - '0';
+    grid = initGraph(line[0] - '0', line[2] - '0');
     fgetc(in);
 
     char tmp1, tmp2, tmp3, tmp4;
@@ -49,10 +48,11 @@ void readGraphFromFile(struct graph *grid, char *file_name) {
             continue;
         }
         fscanf(in, "%d%c%c%lf", &destination, &tmp3, &tmp4, &weight);
-        //printf("%d %d %lf\n", source, destination, weight);
         addEdge(grid, source, destination, weight);
     }
     fclose(in);
+
+    return grid;
 }
 
 
@@ -62,13 +62,16 @@ void writeGraphToFile(struct graph *grid, char *file_name) {
         fprintf(stderr, "Nie mozna stworzyc pliku\n");
         exit(-1);
     }
+    struct vertex *tmp = NULL;
 
     fprintf(out, "%d %d\n", grid->rows, grid->columns);
-    for(int i = 0; i < (grid->rows)*(grid->columns); i++) {
+    int n = (grid->rows)*(grid->columns);
+    for(int i = 0; i < n; i++) {
         fprintf(out, "\t");
-        while(grid->adjacency_list[i].vertexes != NULL) {
-            fprintf(out, " %d :%lf ", grid->adjacency_list[i].vertexes->destination, grid->adjacency_list[i].vertexes->weight);
-            grid->adjacency_list[i].vertexes = grid->adjacency_list[i].vertexes->next;
+        tmp = grid->adjacency_list[i].vertexes;
+        while(tmp != NULL) {
+            fprintf(out, " %d :%lf ", tmp->destination, tmp->weight);
+            tmp = tmp->next;
         }
         fprintf(out, "\n");
     }
@@ -76,21 +79,19 @@ void writeGraphToFile(struct graph *grid, char *file_name) {
 }
 
 void freeGraph(struct graph *grid) {
+    if(grid == NULL) {
+        exit(-1);
+    }
     struct vertex *tmp = NULL;
     int n = (grid->rows) * (grid->columns);
     for(int i = 0; i < n; i++) {
-        if(grid->adjacency_list[i].vertexes == NULL) {
-            break;
-        }
-        while(grid->adjacency_list[i].vertexes) {
-            tmp = grid->adjacency_list[i].vertexes->next;
-            free(grid->adjacency_list[i].vertexes);
-            grid->adjacency_list[i].vertexes = tmp;
+        tmp = grid->adjacency_list[i].vertexes;
+        while(tmp != NULL) {
+            grid->adjacency_list[i].vertexes = grid->adjacency_list[i].vertexes->next;
+            free(tmp);
+            tmp = grid->adjacency_list[i].vertexes;
         }
     }
     free(grid->adjacency_list);
     free(grid);
-
 }
-
-
