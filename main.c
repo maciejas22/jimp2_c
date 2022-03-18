@@ -4,6 +4,7 @@
 #include <ctype.h>
 #include "graph.h"
 #include "BFS.h"
+#include "generator.h"
 
 bool isDouble(char *string) {
     if(atof(string) <= 0) {
@@ -42,10 +43,10 @@ void inputErrorCheck(int argc, char *argv[]){
 int main(int argc, char *argv[]) {
     char *file_name = "mojGraf.txt";
     char *mode = argc > 1 ? argv[1] : "-g";
-    int rows = argc > 2 ? atoi(argv[2]) : 5;     
-    int columns = argc > 3 ? atoi(argv[3]) : 5;
-    double min_weight_range = argc > 4 ? atof(argv[4]) : 0;
-    double max_weight_range = argc > 5 ? atof(argv[5]) : 1; 
+    int rows = argc > 2 ? atoi(argv[2]) : 7;     
+    int columns = argc > 3 ? atoi(argv[3]) : 4;
+    double min_weight_range = argc > 4 ? atof(argv[4]) : 0.0;
+    double max_weight_range = argc > 5 ? atof(argv[5]) : 1.0; 
     inputErrorCheck(argc, argv);
     
     struct graph *grid = NULL;
@@ -53,7 +54,8 @@ int main(int argc, char *argv[]) {
         printf("Jeszcze niezaimplementowane");
     }   
     else if(!strcmp(mode, "-g")) {
-        grid = readGraphFromFile(grid, "mojGraf.txt");
+        grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
+        // grid = readGraphFromFile(grid, "mojGraf.txt");
         writeGraphToFile(grid, "wynik.txt");
         switch(BFS(grid))
         {
