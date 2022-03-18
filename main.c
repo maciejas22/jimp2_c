@@ -14,7 +14,7 @@ bool isDouble(char *string) {
 }
 
 bool isInt(char *string) {
-    if(atoi(string) <= 0) {
+    if(atoi(string) <= 2) {
 	    return 0;
     }
     return 1;
@@ -51,12 +51,22 @@ int main(int argc, char *argv[]) {
     
     struct graph *grid = NULL;
     if(!strcmp(mode, "-r")) {
-        printf("Jeszcze niezaimplementowane");
+        grid = readGraphFromFile(grid, "mojGraf.txt");
+
+        switch(BFS(grid))
+        {
+            case 1:
+                printf("Graf jest spojny\n");
+                break;
+            case 0:
+                printf("Graf nie jest spojny\n");
+                break;
+        }
     }   
     else if(!strcmp(mode, "-g")) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
-        // grid = readGraphFromFile(grid, "mojGraf.txt");
         writeGraphToFile(grid, "wynik.txt");
+
         switch(BFS(grid))
         {
             case 1:
