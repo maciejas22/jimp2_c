@@ -6,15 +6,27 @@
 
 double rnd(double min, double max) {
     double div = (double)rand() / RAND_MAX;
-    return min + (max - min) * div;
+    return (double)min + ((double)max - (double)min) * div;
 }
 
-generateGraph(struct graph *grid, int rows, int columns, double min_weight, double max_weight) {
-    initGraph(rows, columns);
-    printf("dsa");
+struct graph *generateGraph(struct graph *grid, int rows, int columns, double min_weight, double max_weight) {
+    grid = initGraph(rows, columns);
     srand(time(NULL));
-    for(int i = 0; i < 10; i++) {
-        printf("%lf ", rnd(-1, 1));
+
+    // generowanie krawedzi poziomych
+    for(int level = 1; level <= rows; level++) {
+        for(int i = level*columns-columns; i < level*columns-1; i++) {
+            addEdge(grid, i, i+1, rnd(min_weight, max_weight));
+            addEdge(grid, i+1, i, rnd(min_weight, max_weight));
+        }
+    }
+
+    // generowanie krawedzi pionowych
+    for(int level = 0; level < columns; level++) {
+        for(int i = 0; i < rows-1; i++) {
+            addEdge(grid, level + columns*i, level +columns*(i+1), rnd(min_weight, max_weight));
+            addEdge(grid, level +columns*(i+1), level + columns*i, rnd(min_weight, max_weight));
+        }
     }
 
     return grid;
