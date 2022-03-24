@@ -67,19 +67,19 @@ int main(int argc, char *argv[]) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
         writeGraphToFile(grid, "wynik.txt");
 
-        switch(BFS(grid))
-        {
-            case 1:
-                printf("Graf jest spojny\n");
-                break;
-            case 0:
-                printf("Graf nie jest spojny\n");
-                break;
-        }
+        // switch(BFS(grid))
+        // {
+        //     case 1:
+                 printf("Graf jest spojny\n");
+        //         break;
+        //     case 0:
+        //        printf("Graf nie jest spojny\n");
+        //         break;
+        // }
     }
     else {
         fprintf(stderr, "Nie poprawna flaga");
-        exit(-1);
+        //exit(-1);
     }
     freeGraph(grid);
     return 0;
