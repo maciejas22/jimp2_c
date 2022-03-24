@@ -66,39 +66,30 @@ int main(int argc, char *argv[]) {
     else if(!strcmp(mode, "-g")) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
         writeGraphToFile(grid, "wynik.txt");
-
-        // switch(BFS(grid))
-        // {
-        //     case 1:
-                 printf("Graf jest spojny\n");
-        //         break;
-        //     case 0:
-        //        printf("Graf nie jest spojny\n");
-        //         break;
-        // }
+        // nie wywolujemy funcji BFS poniewaz wygenerowany graf jest zawsze spojny (zgodnie z tresnia zadania)
     }
     else if(!strcmp(mode, "-h"))
     {
         printf("Help:\n -h help\n -r wczytaj graf z pliku tekstowego o nazwie mojGraf.txt\n");
         printf(" -g generoj graf: podaj ilosc wierczy i kolumn oraz podaj przedzial wag krawedzi grafu\n");
-        printf("wiersze oraz kolumny musza byc liczbami naturalnymi a wagi zmiennoprzevinkowymi liczbami nieujemnymi\n");
+        printf("Wiersze oraz kolumny musza byc liczbami naturalnymi a wagi zmiennoprzevinkowymi liczbami nieujemnymi.\n");
         printf("\tFromat danych:\n\tW pierwszej linijce pliku powinny znalezc sie dwie liczby naturalne(liczba wierszy i kolumn).\n");
         printf("\tNastepnie w formacie listy powinny znalezc sie wierzcholki docelowe oraz waga krawedzi,\n\tgdzie wierzcholkiem zrodlem jest index linii -2.\n");
-        printf("\tprzykladowy plik:\n2 3");
+        printf("\n\tPrzykladowy plik:\n2 3");
 	    printf("\n\t1 :0.2  3 :0.3");
 	    printf("\n\t0 :0.1  2 :0.8  4 :0.5");
 	    printf("\n\t1 :0.7  5 :0.9");
 	    printf("\n\t0 :0.6  4 :0.4");
-	    printf("\n\t3 :0.3  1 :0.9  5 :0.7");
-	    printf("\n\t2 :0.8  4 :0.9\n");
+        printf("\n\t3 :0.3  1 :0.9  5 :0.7");
+        printf("\n\t2 :0.8  4 :0.9\n");
         printf("\nW tym przypadku powstanie graf 2x3, gdzie wierzcholek 0 zostanie polaczony z\nwierzcholkiem 1 waga 0,2, oraz z wierzcholkiem 3 waga 0,3 itd.");
         printf("\nPrzykladowe wywolanie: ./GraphAnalizer -g 3 8 4.2 7.3");
-        printf("\nWygenerowany zostanie graf o wielkosci 3x8 z krawedziami w zakresie <4,2 ; 7.3>");
+        printf("\nWygenerowany zostanie graf o wielkosci 3x8 z krawedziami w zakresie <4,2 ; 7.3>\n");
 
     }
     else {
         fprintf(stderr, "Nie poprawna flaga");
-        //exit(-1);
+        exit(-1);
     }
     freeGraph(grid);
     return 0;
