@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define INF -1
-
 struct vertex {
     int destination;
     double weight;
