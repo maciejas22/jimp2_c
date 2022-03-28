@@ -5,6 +5,7 @@
 #include "graph.h"
 #include "BFS.h"
 #include "generator.h"
+#include "dixtra.h"
 
 bool isDouble(char *string) {
     if(atof(string) <= 0) {
@@ -67,6 +68,16 @@ int main(int argc, char *argv[]) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
         writeGraphToFile(grid, "wynik.txt");
         // nie wywolujemy funcji BFS poniewaz wygenerowany graf jest zawsze spojny (zgodnie z tresnia zadania)
+        dixtra (grid, 1);
+        // addSon(prio, 1,5,0);
+        // addSon(prio, 2,1,0);
+        // addSon(prio, 3,4,0);
+        // addSon(prio, 4,2,0);
+        // while(prio!=NULL) {
+        //     printf("%d\t%lf\n",prio->vertex,prio->weight);
+        //     prio=prio->next;
+        // }
+
     }
     else if(!strcmp(mode, "-h"))
     {
@@ -91,6 +102,7 @@ int main(int argc, char *argv[]) {
         fprintf(stderr, "Nie poprawna flaga");
         exit(-1);
     }
+
     freeGraph(grid);
     return 0;
 }
