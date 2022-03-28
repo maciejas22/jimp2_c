@@ -48,6 +48,10 @@ struct graph *readGraphFromFile(struct graph *grid, char *file_name) {
             continue;
         }
         fscanf(in, "%d%c%c%lf", &destination, &tmp3, &tmp4, &weight);
+        if (weight <0) {
+            fprintf(stderr, "UJEMNA WAGA");
+            exit (-1);
+        }
         addEdge(grid, source, destination, weight);
     }
     fclose(in);
