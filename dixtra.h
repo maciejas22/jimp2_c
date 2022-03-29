@@ -1,8 +1,10 @@
-#ifndef __dixtra_H__
-#define __dixtra_H__
+#ifndef __DIXTRA_H__
+#define __DIXTRA_H__
 
 #include <stdlib.h>
 #include <stdbool.h>
+#include "graph.h"
+#include <string.h>
 
 struct prioNode {
     int vertex;
@@ -15,5 +17,6 @@ struct prioNode {
 struct prioNode *initPrioNode(int v, double w, int p);
 
 void addSon(struct prioNode *prio ,int v, double w, int p);
-void dixtra (struct graph *grid, int s);
+void dix(struct graph *grid, int s, int p);
+
 #endif

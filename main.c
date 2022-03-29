@@ -54,21 +54,24 @@ int main(int argc, char *argv[]) {
     if(!strcmp(mode, "-r")) {
         grid = readGraphFromFile(grid, "mojGraf.txt");
 
-        switch(BFS(grid))
-        {
-            case 1:
-                printf("Graf jest spojny\n");
-                break;
-            case 0:
-                printf("Graf nie jest spojny\n");
-                break;
-        }
+        // switch(BFS(grid))
+        // {
+        //     case 1:
+        //         printf("Graf jest spojny\n");
+        //         break;
+        //     case 0:
+        //         printf("Graf nie jest spojny\n");
+        //         break;
+        // }
+        writeGraphToFile(grid, "wynik.txt");
+
+        dix (grid, 0, 5);
     }   
     else if(!strcmp(mode, "-g")) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
         writeGraphToFile(grid, "wynik.txt");
         // nie wywolujemy funcji BFS poniewaz wygenerowany graf jest zawsze spojny (zgodnie z tresnia zadania)
-        dixtra (grid, 1);
+        dix (grid, 0, 5);
         // addSon(prio, 1,5,0);
         // addSon(prio, 2,1,0);
         // addSon(prio, 3,4,0);
