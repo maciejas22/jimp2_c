@@ -44,8 +44,8 @@ void inputErrorCheck(int argc, char *argv[]){
 int main(int argc, char *argv[]) {
     char *file_name = "mojGraf.txt";
     char *mode = argc > 1 ? argv[1] : "-g";
-    int rows = argc > 2 ? atoi(argv[2]) : 7;     
-    int columns = argc > 3 ? atoi(argv[3]) : 4;
+    int rows = argc > 2 ? atoi(argv[2]) : 5;     
+    int columns = argc > 3 ? atoi(argv[3]) : 5;
     double min_weight_range = argc > 4 ? atof(argv[4]) : 0.0;
     double max_weight_range = argc > 5 ? atof(argv[5]) : 1.0; 
     inputErrorCheck(argc, argv);
@@ -53,33 +53,44 @@ int main(int argc, char *argv[]) {
     struct graph *grid = NULL;
     if(!strcmp(mode, "-r")) {
         grid = readGraphFromFile(grid, "mojGraf.txt");
+        printf("Miedzy ktorymi wierzholkami chcesz znalezc najkrotsza sciezke?\n");
+        int input1, input2;
+        scanf("%d %d",&input1, &input2);
+        int n = grid->rows*grid->columns;
+        if(input1 > n || input2 > n || input1 < 0 || input2 < 0) {
+            printf("\nNiepoprawna wartosc!\n");
+            exit(-1);
+        }
+        switch(BFS(grid))
+        {
+            case 1:
+                printf("Graf jest spojny\n");
+                break;
+            case 0:
+                printf("Graf nie jest spojny\n");
+                break;
+        }
 
-        // switch(BFS(grid))
-        // {
-        //     case 1:
-        //         printf("Graf jest spojny\n");
-        //         break;
-        //     case 0:
-        //         printf("Graf nie jest spojny\n");
-        //         break;
-        // }
+        for(int i = 0; i < grid->rows*grid->columns; i++) {
+            grid->adjacency_list[i].is_visited = 0;
+        }
+
+        dix (grid, input1, input2);
         writeGraphToFile(grid, "wynik.txt");
-
-        dix (grid, 0, 5);
     }   
     else if(!strcmp(mode, "-g")) {
         grid = generateGraph(grid, rows, columns, min_weight_range, max_weight_range);
         writeGraphToFile(grid, "wynik.txt");
         // nie wywolujemy funcji BFS poniewaz wygenerowany graf jest zawsze spojny (zgodnie z tresnia zadania)
-        dix (grid, 0, 5);
-        // addSon(prio, 1,5,0);
-        // addSon(prio, 2,1,0);
-        // addSon(prio, 3,4,0);
-        // addSon(prio, 4,2,0);
-        // while(prio!=NULL) {
-        //     printf("%d\t%lf\n",prio->vertex,prio->weight);
-        //     prio=prio->next;
-        // }
+        printf("Miedzy ktorymi wierzholkami chcesz znalezc najkrotsza sciezke?\n");
+        int input1, input2;
+        scanf("%d %d",&input1, &input2);
+        int n = grid->rows*grid->columns;
+        if(input1 > n || input2 > n || input1 < 0 || input2 < 0) {
+            printf("\nNiepoprawna wartosc!\n");
+            exit(-1);
+        }
+        dix(grid, input1, input2);
 
     }
     else if(!strcmp(mode, "-h"))
