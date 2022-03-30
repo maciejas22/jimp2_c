@@ -1,5 +1,5 @@
-graph: main.o graph.o BFS.o generator.o
-	$(CC) main.o graph.o BFS.o generator.o -o graph
+graph: main.o graph.o BFS.o generator.o dixtra.o
+	$(CC) main.o graph.o BFS.o generator.o dixtra.o -o graph
 	
 main.o: main.c
 	$(CC) -c main.c
@@ -12,7 +12,8 @@ BFS.o: BFS.c BFS.h graph.c graph.h
 
 generator.o: generator.c generator.h graph.c graph.h
 	$(CC) -c generator.c graph.c
-
+dixtra.o: graph.c graph.h dixtra.c dixtra.h
+	$(CC) -c dixtra.c graph.c
 .PHONY: clean
 
 clean:
