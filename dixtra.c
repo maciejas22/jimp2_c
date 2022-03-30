@@ -21,22 +21,19 @@ void addSon(struct prioNode *prio ,int v, double w, int p) {
         tmp = tmp->next;
     }
     tmp2->next = tmp->next;
-     tmp->next =tmp2;
+    tmp->next =tmp2;
 }
-
-// void remove(struct prioNode *prio, int h) {
-//     printf("dupa");
-// }
 
 void dix(struct graph *grid, int s, int p) {
     struct prioNode *prio = initPrioNode(s,0,0);
     struct prioNode *move =prio;
     struct vertex *ver = grid->adjacency_list[s].vertexes;
-
+    int start = s, finish = p;
 
     for (int i=0;i<grid->rows*grid->columns;i++) {
         if (i!=s) addSon (prio,i,INF,i);
     }
+
     int i=0;
     while(move->next!=NULL) {
         //dodanie synów po znaczniuku move 
@@ -48,11 +45,11 @@ void dix(struct graph *grid, int s, int p) {
             }
             ver=ver->next;
         }
-        //printf("%d\t",move->vertex);
         grid->adjacency_list[move->vertex].is_visited=1;
         move = move->next;
         s = move->vertex;
     }
+
     int g=grid->rows*grid->columns;
     double *road = (double *)malloc(g*sizeof(double));
     int *pre = (int *)malloc(g*sizeof(int));
@@ -61,25 +58,44 @@ void dix(struct graph *grid, int s, int p) {
         pre[j]=INF;
     }
 
-    while(prio!=NULL) {
-            if (prio->weight<road[prio->vertex]) {
-                road[prio->vertex]=prio->weight;
-                pre[prio->vertex]=prio->previous;
+    struct prioNode *prio2 =prio;
+    while(prio2!=NULL) {
+            if (prio2->weight<road[prio2->vertex]) {
+                road[prio2->vertex]=prio2->weight;
+                pre[prio2->vertex]=prio2->previous;
             }
-            //printf("%d\t%lf\t%d\n",prio->vertex,prio->weight,prio->previous);
-            prio=prio->next;
+            prio2=prio2->next;
     }
 
-    for (int j=0;j<g;j++) {
+    int current = finish;
+    int len = 0;
+    while(current != start) {
+        len++;
+        current = pre[current];
+    }
+    int *trasa = (int *)malloc(len*sizeof(int));
+    int it = 0;
+    current = finish;
+    while(current != start) {
+        trasa[it] = current;
+        current = pre[current];
+        it++;
+    }
+    printf("Najkrotsza sciezka: \n");
+    printf("%d ", start);
+    for(i = len-1; i>=0; i--) {
+        printf("-> %d ",trasa[i]);
+    }
+    printf("\n");
+    printf("Dlugosc sciezki: \n");
+    printf("%lf \n", road[finish]);
 
-        printf ("%d\t%lf\t%d\n", j,road[j], pre[j]);
+
+    while(prio != NULL) {
+        struct prioNode *x =prio;
+        prio = prio->next;
+        free(x);
     }
-    int current=p;
-    char * trasa;
-    char baffer[20];
-    while (current!=s) {
-        trasa = strcat(trasa,itoa(current,baffer,10));
-        current=pre[current];
-    }
-    printf("%s",trasa);
+    free(road);
+    free(pre);
 }

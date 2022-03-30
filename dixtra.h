@@ -13,10 +13,10 @@ struct prioNode {
     struct prioNode *next;
 };
 
-
 struct prioNode *initPrioNode(int v, double w, int p);
 
 void addSon(struct prioNode *prio ,int v, double w, int p);
 void dix(struct graph *grid, int s, int p);
+int intLen(int a);
 
 #endif
