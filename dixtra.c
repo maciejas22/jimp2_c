@@ -98,4 +98,5 @@ void dix(struct graph *grid, int s, int p) {
     }
     free(road);
     free(pre);
+    free(trasa);
 }
