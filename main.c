@@ -15,7 +15,7 @@ bool isDouble(char *string) {
 }
 
 bool isInt(char *string) {
-    if(atoi(string) <= 2) {
+    if(atoi(string) < 2) {
 	    return 0;
     }
     return 1;
