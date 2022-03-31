@@ -17,7 +17,6 @@ struct node *initNode(int index);
 struct nodePtr *initQueue();
 void insertToQueue(struct nodePtr *queue, int index);
 int removeFromQueue(struct nodePtr *queue);
-void printQueue(struct nodePtr *queue);
 int BFS(struct graph *grid);
 
 #endif

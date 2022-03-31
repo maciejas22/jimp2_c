@@ -43,14 +43,6 @@ int removeFromQueue(struct nodePtr *queue) {
     return res;
 }
 
-void printQueue(struct nodePtr *queue) {
-    struct node *tmp = queue->front;
-    while(tmp != NULL) {
-        printf("%d ", tmp->index);
-        tmp = tmp->next;
-    }
-}
-
 int BFS(struct graph *grid) {
     struct nodePtr *queue = initQueue();
     grid->adjacency_list[0].is_visited = 1;
