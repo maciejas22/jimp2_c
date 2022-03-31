@@ -53,29 +53,31 @@ int main(int argc, char *argv[]) {
     struct graph *grid = NULL;
     if(!strcmp(mode, "-r")) {
         grid = readGraphFromFile(grid, "mojGraf.txt");
-        printf("Miedzy ktorymi wierzholkami chcesz znalezc najkrotsza sciezke?\n");
-        int input1, input2;
-        scanf("%d %d",&input1, &input2);
-        int n = grid->rows*grid->columns;
-        if(input1 > n || input2 > n || input1 < 0 || input2 < 0) {
-            printf("\nNiepoprawna wartosc!\n");
-            exit(-1);
-        }
         switch(BFS(grid))
         {
             case 1:
                 printf("Graf jest spojny\n");
+
+                printf("Miedzy ktorymi wierzholkami chcesz znalezc najkrotsza sciezke?\n");
+                int input1, input2;
+                scanf("%d %d",&input1, &input2);
+                int n = grid->rows*grid->columns;
+                if(input1 > n || input2 > n || input1 < 0 || input2 < 0) {
+                    printf("\nNiepoprawna wartosc!\n");
+                    exit(-1);
+                }
+                for(int i = 0; i < grid->rows*grid->columns; i++) {
+                grid->adjacency_list[i].is_visited = 0;
+                }
+
+                dix (grid, input1, input2);
+
                 break;
             case 0:
                 printf("Graf nie jest spojny\n");
                 break;
         }
 
-        for(int i = 0; i < grid->rows*grid->columns; i++) {
-            grid->adjacency_list[i].is_visited = 0;
-        }
-
-        dix (grid, input1, input2);
         writeGraphToFile(grid, "wynik.txt");
     }   
     else if(!strcmp(mode, "-g")) {
