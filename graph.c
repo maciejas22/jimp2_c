@@ -32,10 +32,9 @@ struct graph *readGraphFromFile(struct graph *grid, char *file_name) {
         exit(-1);
     }
 
-    char line[4];
-    fgets(line, 4, in);
-    grid = initGraph(line[0] - '0', line[2] - '0');
-    fgetc(in);
+    int r, c;
+    fscanf(in, "%d %d",&r, &c);
+    grid = initGraph(r, c);
 
     char tmp1, tmp2, tmp3, tmp4;
     int destination, source = 0;
@@ -48,10 +47,7 @@ struct graph *readGraphFromFile(struct graph *grid, char *file_name) {
             continue;
         }
         fscanf(in, "%d%c%c%lf", &destination, &tmp3, &tmp4, &weight);
-        if (weight <0) {
-            fprintf(stderr, "UJEMNA WAGA");
-            exit (-1);
-        }
+        
         addEdge(grid, source, destination, weight);
     }
     fclose(in);
